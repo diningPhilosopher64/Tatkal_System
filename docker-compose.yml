@@ -1,0 +1,80 @@
+version: "3"
+
+services: 
+  tatkal_website:
+    # No need to build everytime unless we make changes to the image
+    # build:
+    #   context: ./dockerFiles
+    #   dockerfile: smartstocks_django_dockerfile
+    image: sourabhkondapaka/tatkal_website
+    deploy:
+      restart_policy:
+        condition: on-failure
+        delay: 1s
+        max_attempts: 3
+        window: 10s
+
+    # logging:
+    #   driver: syslog
+    #   options:
+    #     syslog-address: "tcp://172.17.0.5:5000"
+
+    ports: 
+      - 8000:8000
+
+    volumes: 
+      - ./WebSite/:/home/user/
+
+    depends_on: 
+      - db    
+
+    command: >
+     sh -c "python3 manage.py makemigrations && python3 manage.py migrate && python3 manage.py runserver 0.0.0.0:8000"
+
+  booking_service:
+    # No need to build everytime unless we make changes to the image
+    # build:
+    #   context: ./dockerFiles
+    #   dockerfile: smartstocks_django_dockerfile
+    image: sourabhkondapaka/booking_service
+    deploy:
+      restart_policy:
+        condition: on-failure
+        delay: 1s
+        max_attempts: 3
+        window: 10s
+
+    # logging:
+    #   driver: syslog
+    #   options:
+    #     syslog-address: "tcp://172.17.0.5:5000"
+
+    ports: 
+      - 8001:8000
+
+    volumes: 
+      - ./Booking_Service/:/home/user/
+
+    depends_on: 
+      - db    
+
+    command: >  # this can also run on 8000 as they are 2 different containers ? 
+     sh -c "python3 manage.py makemigrations && python3 manage.py migrate && python3 manage.py runserver 0.0.0.0:8000"  
+
+
+  db:
+    # build:
+    image: sourabhkondapaka/tatkal_postgres_db
+
+    ports: 
+      - 7890:5432
+
+    # logging:
+    #   driver: syslog
+    #   options:
+    #     syslog-address: "tcp://172.17.0.4:5001"
+
+
+    volumes: 
+      - ./db:/var/lib/postgresql/data
+

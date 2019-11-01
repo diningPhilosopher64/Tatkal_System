@@ -36,7 +36,7 @@ services:
     # build:
     #   context: ./dockerFiles
     #   dockerfile: smartstocks_django_dockerfile
-    image: sourabhkondapaka/booking_service
+    image: sourabhkondapaka/tatkal_booking_service
     deploy:
       restart_policy:
         condition: on-failure

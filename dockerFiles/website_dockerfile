@@ -5,13 +5,11 @@ ENV PYTHONUNBUFFERED 1
 COPY ./requirements/requirements_website.txt /requirements_website.txt
 
 RUN pip3 install -r requirements_website.txt
-
-
 RUN useradd -ms /bin/bash user
+
 USER user
 
 WORKDIR /home/user
 
 #website will run on port 8000 and booking_service will run on port 8001
 #CMD ['python3','manage.py','runserver','0.0.0.0:8000']
-#hi this is for testing

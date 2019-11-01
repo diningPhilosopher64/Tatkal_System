@@ -7,5 +7,4 @@ Booking_Service/booking_service/__pycache__/
 Booking_Service/db.sqlite3
 WebSite/db.sqlite3
 
-Booking_Service/booking_service/__init__.py
-WebSite/website/__init__.py
+**/**/__init__.py

@@ -20,8 +20,8 @@ class Train(models.Model):
 
 
 class Booking(models.Model):
-    user_id = models.IntegerField()
-    train_id = models.IntegerField()
+    # user_id = models.IntegerField()
+    # train_id = models.IntegerField()
     date = models.DateTimeField(default=datetime.now, blank=True)
 
     class Meta:

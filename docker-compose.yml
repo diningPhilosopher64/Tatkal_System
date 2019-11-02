@@ -7,12 +7,13 @@ services:
     #   context: ./dockerFiles
     #   dockerfile: smartstocks_django_dockerfile
     image: sourabhkondapaka/tatkal_website
-    deploy:
-      restart_policy:
-        condition: on-failure
-        delay: 1s
-        max_attempts: 3
-        window: 10s
+    restart: on-failure
+    # deploy:
+    #   restart_policy:
+    #     condition: on-failure
+    #     delay: 1s
+    #     max_attempts: 3
+    #     window: 10s
 
     # logging:
     #   driver: syslog
@@ -37,12 +38,7 @@ services:
     #   context: ./dockerFiles
     #   dockerfile: smartstocks_django_dockerfile
     image: sourabhkondapaka/tatkal_booking_service
-    deploy:
-      restart_policy:
-        condition: on-failure
-        delay: 1s
-        max_attempts: 3
-        window: 10s
+    restart: on-failure    
 
     # logging:
     #   driver: syslog

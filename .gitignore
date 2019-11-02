@@ -1,10 +1,11 @@
 venv/
 db/
 
-WebSite/website/__pycache__/
-Booking_Service/booking_service/__pycache__/
+**/__pycache__/*
+**/**/migrations/*
 
-Booking_Service/db.sqlite3
-WebSite/db.sqlite3
+**/db.sqlite3
+**/db.sqlite3
 
-**/**/__init__.py
+**/__init__.py
+

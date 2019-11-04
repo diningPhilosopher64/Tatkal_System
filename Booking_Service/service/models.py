@@ -1,6 +1,7 @@
 from django.db import models
 from django.core.validators import MinValueValidator, MaxValueValidator
 from datetime import datetime
+from django.db import connection
 
 # Create your models here.
 
@@ -28,3 +29,26 @@ class Booking(models.Model):
 
     def __str__(self):
         return str(self.user_id) + " booked train on " + self.date.strftime('%m/%d/%Y')
+
+
+    def save(self, *args, **kwargs):
+        if valid_user(self.user_id):
+            super(Booking, self).save(*args, **kwargs)
+
+        else:
+            raise DoesNotExist
+
+        
+def valid_user(user_id):    
+    try:
+        with connection.cursor() as cursor:            
+            row = cursor.execute("select * from accounts_account where id = "+ str(user_id) +";")   
+            row = cursor.fetchone()
+            print( " Row is : \n\n\n")
+            print(row)
+            if row:
+                return True
+            else:
+                return False       
+    except:
+        return False

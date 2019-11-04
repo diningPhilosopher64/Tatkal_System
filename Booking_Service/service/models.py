@@ -14,18 +14,17 @@ class Train(models.Model):
     class Meta:
         ordering = ('name',)
 
-
     def __str__(self):
         return self.name
 
 
 class Booking(models.Model):
-    # user_id = models.IntegerField()
-    # train_id = models.IntegerField()
+    user_id = models.IntegerField(blank = True, null = True)
+    train_id = models.ForeignKey(Train, on_delete= models.CASCADE, null = True)
     date = models.DateTimeField(default=datetime.now, blank=True)
 
     class Meta:
-        ordering = ('-date',)
+        ordering = ('-date','user_id')
 
     def __str__(self):
-        return self.user_id + " booked train on " + self.date 
+        return str(self.user_id) + " booked train on " + self.date.strftime('%m/%d/%Y')

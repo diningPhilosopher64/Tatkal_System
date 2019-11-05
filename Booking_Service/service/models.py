@@ -44,8 +44,7 @@ def valid_user(user_id):
         with connection.cursor() as cursor:            
             row = cursor.execute("select * from accounts_account where id = "+ str(user_id) +";")   
             row = cursor.fetchone()
-            print( " Row is : \n\n\n")
-            print(row)
+
             if row:
                 return True
             else:

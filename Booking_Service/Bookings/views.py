@@ -5,11 +5,26 @@ from .models import *
 from .serializers import *
 
 class BookingList(generics.ListCreateAPIView):
-    queryset = Booking.objects.all()
     serializer_class = BookingSerializer
-    name = 'booking-list'
+    name = 'bookings-list'
+
+    def get_queryset(self):        
+        user = self.request.user
+        return Booking.objects.filter(user_id=user.id)
+    
 
 class BookingDetail(generics.RetrieveUpdateDestroyAPIView):
-    queryset = Booking.objects.all()
     serializer_class = BookingSerializer
     name = 'booking-detail'
+
+    def get_queryset(self):        
+        user = self.request.user
+        return Booking.objects.filter(user_id=user.id)
+
+
+class AllBookings(generics.ListCreateAPIView):
+    serializer_class = BookingSerializer
+    queryset = Booking.objects.all()
+    name = 'all-bookings-list'
+
+

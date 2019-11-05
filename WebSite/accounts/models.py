@@ -1,11 +1,13 @@
-from django.contrib.auth.models import User
-from django.db import models
-from django.db.models.signals import post_save
-from django.dispatch import receiver
+# from django.contrib.auth.models import User
+# from django.db.models.signals import post_save
+# from django.dispatch import receiver
 from django.core.validators import MinValueValidator, MaxValueValidator
+from django.db import models
 from django.contrib.auth.models import (
     BaseUserManager, AbstractBaseUser
 )
+
+
 
 # Create your models here.
 
@@ -24,21 +26,16 @@ from django.contrib.auth.models import (
 class AccountManager(BaseUserManager):
     def create_user(self, email, age, city, gender, password=None):
         """
-        Creates and saves a User with the given email, date of
-        birth and password.
+        Creates and saves a User with the given email, age,city and password.
         """
         if not email:
             raise ValueError('Users must have an email address')
-        
         elif not age:
             raise ValueError("User must have an age")
-        
         elif not city:
             raise ValueError("User must have a city")
-        
         elif not gender:
             raise ValueError("User must have a gender")
-
 
         user = self.model(
             email=self.normalize_email(email),
@@ -53,14 +50,13 @@ class AccountManager(BaseUserManager):
 
     def create_superuser(self, email, age, city, gender, password):
         """
-        Creates and saves a superuser with the given email, date of
-        birth and password.
+        Creates and saves a User with the given email, age,city and password.
         """
         user = self.create_user(
             email,
-            age,
-            city,
-            gender,
+            age=age,
+            city=city,
+            gender=gender,
             password=password,            
         )
         user.is_admin = True
@@ -93,6 +89,14 @@ class Account(AbstractBaseUser):
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['age', 'city', 'gender']
+
+    def get_full_name(self):
+        # The user is identified by their email address
+        return self.email
+
+    def get_short_name(self):
+        # The user is identified by their email address
+        return self.email
 
     def __str__(self):
         return self.email

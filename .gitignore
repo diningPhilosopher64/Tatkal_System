@@ -4,10 +4,16 @@ db/
 **/.bash_history
 
 **/__pycache__/*
-**/**/migrations/*
+**/migrations/*
 
 **/db.sqlite3
 **/db.sqlite3
 
 **/__init__.py
 
+
+### Django ###
+*.log
+*.pot
+*.pyc
+__pycache__/

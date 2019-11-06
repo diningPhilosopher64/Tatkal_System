@@ -47,6 +47,8 @@ INSTALLED_APPS = [
 
     ]
 
+ALLOWED_HOSTS = ["*"]
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',

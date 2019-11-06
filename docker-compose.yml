@@ -20,6 +20,12 @@ services:
     #   options:
     #     syslog-address: "tcp://172.17.0.5:5000"
 
+    links:
+      - "tatkal_booking_service:bookingService"
+
+    # networks:
+    #   - common
+
     ports: 
       - 8000:8000
 
@@ -45,6 +51,9 @@ services:
     #   options:
     #     syslog-address: "tcp://172.17.0.5:5000"
 
+    # networks:
+    #   - common
+
     ports: 
       - 8001:8000
 
@@ -62,6 +71,9 @@ services:
     # build:
     image: sourabhkondapaka/tatkal_postgres_db
 
+    # networks:
+    #   - common
+
     ports: 
       - 7890:5432
 
@@ -73,4 +85,9 @@ services:
 
     volumes: 
       - ./db:/var/lib/postgresql/data
+
+
+networks:
+  common:
+    driver: bridge
 

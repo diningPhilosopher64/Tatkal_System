@@ -1,7 +1,8 @@
 from .models import Account
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 from django.http import HttpResponseRedirect
 from .forms import RegisterForm
+from dashboard import views as dashboard_views
 
 from django.contrib.auth import authenticate, login
 
@@ -61,7 +62,8 @@ def user_login(request):
             login(request, accnt)
             # Success, now let's login the user.
             obj=Account.objects.get(email=username)
-            return render(request, 'accounts/dashboard.html',{'object':obj})
+            return render(request, 'dashboard/dashboard.html',{'object':obj})
+            # return redirect(dashboard_views.TrainListView)
         else:
             # Incorrect credentials, let's throw an error to the screen.
             return render(request, 'accounts/login.html', {'error_message': 'Incorrect username and / or password.'})

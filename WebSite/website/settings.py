@@ -25,7 +25,7 @@ SECRET_KEY = '73scw_wu7exrb^)=v*ntek*x9g@8-!$%1ouq5vll&_75jlxnuu'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["0.0.0.0", "localhost"]
+ALLOWED_HOSTS = ["0.0.0.0", "localhost","tatkal_website", "*"]
 
 
 # Application definition
@@ -82,7 +82,6 @@ DATABASES = {
     'default': {
         # 'ENGINE': 'django.db.backends.sqlite3',
         # 'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-
 
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'db',

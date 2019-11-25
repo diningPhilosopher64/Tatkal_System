@@ -1,7 +1,54 @@
 {% extends "partials/base.html" %}
 
 {% block content %}
-  
 
-    Hello World
+<div class='container'>
+    <div class="row-content">
+
+        <div class = 'col-sm-6'>    
+            <table class="table">
+                <thead>
+                <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Departure Station</th>
+                    <th scope="col">Destination Station</th>
+                    <th scope="col">Tickets Left</th>
+                </tr>
+                </thead>
+
+                <tbody>
+
+                {% for train in trains %}
+                <tr>       
+                    <td>{{ train.id }}</td>
+                    <td>{{ train.name }}</td>
+                    <td>{{ train.departure_station }}</td>
+                    <td>{{ train.destination_station }}</td>
+                    <td>{{ train.tickets_left }}</td> 
+
+                    <td>
+                        <a href=""></a>
+                    
+                    
+                    </td> 
+                </tr>
+
+                {% endfor %} 
+                
+
+
+
+                </tbody>
+            </table>
+        </div>
+
+
+
+    </div>
+
+</div>
+
+  
+   
 {% endblock %}

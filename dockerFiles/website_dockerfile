@@ -2,6 +2,8 @@ FROM python:3.6-stretch
 
 ENV PYTHONUNBUFFERED 1
 
+EXPOSE 80
+
 COPY ./requirements/requirements_website.txt /requirements_website.txt
 
 RUN pip3 install -r requirements_website.txt

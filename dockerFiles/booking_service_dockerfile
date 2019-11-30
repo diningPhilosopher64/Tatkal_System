@@ -6,6 +6,8 @@ COPY ./requirements/requirements_booking_service.txt /requirements_booking_servi
 
 RUN pip3 install -r requirements_booking_service.txt
 
+EXPOSE 80
+
 
 RUN useradd -ms /bin/bash user
 USER user

@@ -47,7 +47,7 @@ INSTALLED_APPS = [
 
     ]
 
-ALLOWED_HOSTS = ["*"]
+ALLOWED_HOSTS = ["*","tatkal_booking_service","0.0.0.0", "localhost"]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

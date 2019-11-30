@@ -1,12 +1,11 @@
 from .models import *
 from rest_framework import serializers
 
-class TrainSerializer(serializers.HyperlinkedModelSerializer):
+class TrainSerializer(serializers.ModelSerializer):
     class Meta:
         model = Train
         fields = (
-            'url',
-            'pk',
+            'id',
             'name',
             'departure_station',
             'destination_station',

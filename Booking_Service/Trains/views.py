@@ -14,3 +14,6 @@ class TrainDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Train.objects.all()
     serializer_class = TrainSerializer
     name='train-detail'
+
+
+

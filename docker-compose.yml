@@ -8,17 +8,6 @@ services:
     #   dockerfile: smartstocks_django_dockerfile
     image: sourabhkondapaka/tatkal_website
     # restart: on-failure
-    # deploy:
-    #   restart_policy:
-    #     condition: on-failure
-    #     delay: 1s
-    #     max_attempts: 3
-    #     window: 10s
-
-    # logging:
-    #   driver: syslog
-    #   options:
-    #     syslog-address: "tcp://172.17.0.5:5000"
 
     links:
       - "tatkal_booking_service:bookingService"
@@ -46,13 +35,10 @@ services:
     image: sourabhkondapaka/tatkal_booking_service
     # restart: on-failure    
 
-    # logging:
-    #   driver: syslog
-    #   options:
-    #     syslog-address: "tcp://172.17.0.5:5000"
-
     # networks:
     #   - common
+
+    
 
     ports: 
       - 8001:8000
@@ -77,17 +63,22 @@ services:
     ports: 
       - 7890:5432
 
-    # logging:
-    #   driver: syslog
-    #   options:
-    #     syslog-address: "tcp://172.17.0.4:5001"
-
-
     volumes: 
       - ./db:/var/lib/postgresql/data
 
 
-networks:
-  common:
-    driver: bridge
+# networks:
+#   common:
+#     driver: bridge
+
+
+
+
+# The following also works in terminal and python shell (inside the container).
+#curl -i 172.19.0.4:8000/trains/    # we need to add the last "/"
+#result = r.get("http://172.18.0.3:8000/trains/")
+#result.content
+
+# when "link" is uncommented in website we can do 
+# curl bookingService:8000/trains/
 

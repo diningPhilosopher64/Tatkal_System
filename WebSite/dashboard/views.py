@@ -32,7 +32,7 @@ def booking_list(request):
     print("\n\n\n  ", query, "\n\n\n" )
     print("\n\n content is : \n", os.popen(query).read(), "\n\n\n")
     content = json.loads(os.popen(query).read())
-    # content = os.popen(query).read()
+    
 
 
     context = {

@@ -1,0 +1,55 @@
+{% extends "partials/base.html" %}
+
+{% block content %}
+
+
+
+<div class='container'>
+    <div class="row-content">
+
+        <div class = 'col-sm-12'>    
+
+            
+             <table class="table">
+
+                <thead>
+                    <tr>
+
+                        <th scope="col">Booking ID</th>
+                        <th scope="col">Booking Date</th>
+                        <th scope="col">Train ID</th>
+                        <th scope="col">Train Name</th>
+                        <th scope="col">Train Departure Station</th>
+                        <th scope="col">Train Destination Station</th>       
+
+                    </tr>
+                </thead>
+
+                <tbody>                
+                    {% for booking in bookings.user_bookings %}
+                    <tr>     
+
+                        <td> {{ booking.id }} </td>
+                        <td> {{ booking.date }} </td>
+
+                        <td>{{ booking.train_id.id }}</td>
+                        <td>{{ booking.train_id.name }}</td>
+                        <td>{{ booking.train_id.departure_station }}</td>
+                        <td>{{ booking.train_id.destination_station }}</td>
+                    
+                    </tr>
+                    {% endfor %}
+
+                </tbody>
+            </table> 
+        </div>
+
+    </div>
+
+</div>
+
+
+
+
+
+{% endblock %}

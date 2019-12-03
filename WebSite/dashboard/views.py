@@ -41,6 +41,28 @@ def booking_list(request):
     return render(request, "dashboard/bookings.html", context= context)
 
 
+def book_ticket(request, train_id, tickets_left):   
+    
+    # Ping Trains and decrease count
+    tickets_left -= 1
+    query = "curl bookingService:8000/trains/{}/{}".format(str(train_id), str(tickets_left))
+    content = json.loads(os.popen(query).read())
+
+    if content["status"] == "Success":
+        # If successfully decreased ticket count add to booking list
+
+
+    
+    
+
+    
+
+    
+
+    return train_list(request)
+
+
+
 
 
 

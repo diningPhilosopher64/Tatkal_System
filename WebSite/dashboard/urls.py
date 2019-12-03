@@ -6,5 +6,6 @@ app_name = 'dashboard' # So we can use it like: {% url 'mymodule:user_register' 
 urlpatterns = [
     
     path('',  views.train_list, name='train-list'),
-    path('bookings/',  views.booking_list, name='booking-list'), 
+    path('bookings/',  views.booking_list, name='booking-list'),
+    path('book/<int:train_id>/<int:tickets_left>', views.book_ticket, name = 'book-ticket') 
 ]

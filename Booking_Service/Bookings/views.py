@@ -16,13 +16,13 @@ class BookingList(APIView):
         return Response({"user_bookings" : user_bookings_serializer.data})   
     
 
-class BookingDetail(generics.RetrieveUpdateDestroyAPIView):
-    serializer_class = BookingSerializer
-    name = 'booking-detail'
+# class BookingDetail(generics.RetrieveUpdateDestroyAPIView):
+#     serializer_class = BookingSerializer
+#     name = 'booking-detail'
 
-    def get_queryset(self):        
-        user = self.request.user
-        return Booking.objects.filter(user_id=user.id)
+#     def get_queryset(self):        
+#         user = self.request.user
+#         return Booking.objects.filter(user_id=user.id)
 
 
 class AllBookings(generics.ListCreateAPIView):

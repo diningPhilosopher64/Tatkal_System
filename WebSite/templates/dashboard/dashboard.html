@@ -21,17 +21,25 @@
                 <tbody>
 
                 {% for train in trains %}
-                <tr>       
+                <tr >       
                     <td>{{ train.id }}</td>
                     <td>{{ train.name }}</td>
                     <td>{{ train.departure_station }}</td>
                     <td>{{ train.destination_station }}</td>
-                    <td>{{ train.tickets_left }}</td> 
+                    <td>  <span id="{{ train.id }}" > {{ train.tickets_left }} </span> </td> 
 
                     <td>
-                        <a href=""></a>
-                    
-                    
+
+
+                         
+                        <Button class='btn btn-primary' onclick="bookTicket({{ train.id }}, {{ train.tickets_left }})"> Book Now </Button>
+
+                        {% comment %} <form action="{% url 'dashboard:book-ticket' train_id=train.id tickets_left=train.tickets_left %}" method = "post">
+                        {% csrf_token %}
+                        <button type='submit'>Book Now</button>
+                        </form> {% endcomment %}
+
+                        {% comment %} <a href="">Book Now</a>                                         {% endcomment %}
                     </td> 
                 </tr>
 
@@ -47,7 +55,58 @@
     </div>
 
 </div>
- 
-   
+
+
+<script>
+
+    function bookTicket(train_id, tickets_left)
+    {
+
+        if(tickets_left < 1)
+        {
+            alert("No Tickets left");
+            return;
+        }
+
+        
+
+        url = "{{request.build_absolute_uri}}"
+        url = url + "book/"+train_id +"/" +tickets_left
+
+        console.log(url)
+
+        
+        $.ajax({
+      type: "GET",
+      url: url,
+      data: {
+            
+      },
+      success: function(data){
+        alert("Booked Ticket Successfully");
+        //UpdateTicketCount(train_id, data.ticket_count);
+      },
+
+    error: function(error_data){
+        console.log(error_data);
+        alert("Cannot Book ticket");
+    },
+
+    });    
+
+    
+    
+    }
+
+
+    function UpdateTicketCount(train_id, ticket_count)
+    {
+        var arg = "#" + train_id.toString();
+        $(arg).html(tickets_count);
+    }
+
+
+
+</script>
 
 {% endblock %}

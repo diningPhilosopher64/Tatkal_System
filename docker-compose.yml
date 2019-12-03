@@ -2,18 +2,14 @@ version: "3"
 
 services: 
   tatkal_website:
-    # No need to build everytime unless we make changes to the image
-    # build:
-    #   context: ./dockerFiles
-    #   dockerfile: smartstocks_django_dockerfile
+    
     image: sourabhkondapaka/tatkal_website
-    # restart: on-failure
+    restart: on-failure
+    
 
     links:
       - "tatkal_booking_service:bookingService"
 
-    # networks:
-    #   - common
 
     ports: 
       - 8000:8000
@@ -28,17 +24,9 @@ services:
      sh -c "python3 manage.py makemigrations && python3 manage.py migrate && python3 manage.py runserver 0.0.0.0:8000"
 
   tatkal_booking_service:
-    # No need to build everytime unless we make changes to the image
-    # build:
-    #   context: ./dockerFiles
-    #   dockerfile: smartstocks_django_dockerfile
-    image: sourabhkondapaka/tatkal_booking_service
-    # restart: on-failure    
-
-    # networks:
-    #   - common
-
-    
+ 
+    image: sourabhkondapaka/tatkal_booking_service   
+    restart: on-failure 
 
     ports: 
       - 8001:8000
@@ -49,36 +37,15 @@ services:
     depends_on: 
       - db    
 
-    command: >  # this can also run on 8000 as they are 2 different containers ? 
+    command: > 
      sh -c "python3 manage.py makemigrations && python3 manage.py migrate && python3 manage.py runserver 0.0.0.0:8000"  
 
-
   db:
-    # build:
-    image: sourabhkondapaka/tatkal_postgres_db
-
-    # networks:
-    #   - common
+    
+    image: sourabhkondapaka/tatkal_postgres_db    
 
     ports: 
       - 7890:5432
 
     volumes: 
       - ./db:/var/lib/postgresql/data
-
-
-# networks:
-#   common:
-#     driver: bridge
-
-
-
-
-# The following also works in terminal and python shell (inside the container).
-#curl -i 172.19.0.4:8000/trains/    # we need to add the last "/"
-#result = r.get("http://172.18.0.3:8000/trains/")
-#result.content
-
-# when "link" is uncommented in website we can do 
-# curl bookingService:8000/trains/
-

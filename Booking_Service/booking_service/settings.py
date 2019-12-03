@@ -42,8 +42,11 @@ INSTALLED_APPS = [
     'rest_framework',
 
     #Custom Apps:    
-    'Bookings.apps.BookingsConfig',
-    'Trains.apps.TrainsConfig',
+    # 'Bookings.apps.BookingsConfig',
+    # 'Trains.apps.TrainsConfig',
+
+    'Bookings',
+    'Trains',
 
     ]
 

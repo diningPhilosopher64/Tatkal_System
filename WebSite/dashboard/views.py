@@ -1,5 +1,4 @@
 from django.shortcuts import render
-from accounts.models import Account
 from django.views.generic import (
     DetailView,
     ListView,
@@ -7,62 +6,24 @@ from django.views.generic import (
 import os
 import json
 
-
-
-
 # Create your views here.
 
 
-
-def train_list(request):
+def get_train_list():
     content = json.loads(os.popen('curl bookingService:8000/trains/').read())       
     context = {
-        "trains" : content
+        "trains" : content,        
     }
 
+    return content
+
+
+
+
+def dashboard(request):
+    context = get_train_list()
+    print("\n\n user id is ", request.user.id, "\n\n")
     return render(request, 'dashboard/dashboard.html', context=context)
 
 
-def booking_list(request):
-    #curl -X GET bookingService:8000/bookings?user_id=1
-    print("\n\n ID is" , request.user.id, "\n\n")
-    # query = "curl bookingService:8000/bookings/?user_id="+ str(request.user.id)
-    query = "curl bookingService:8000/bookings/"+ str(request.user.id)
-
-    print("\n\n\n  ", query, "\n\n\n" )
-    print("\n\n content is : \n", os.popen(query).read(), "\n\n\n")
-    content = json.loads(os.popen(query).read())
     
-
-
-    context = {
-        "bookings" : content
-    }
-    return render(request, "dashboard/bookings.html", context= context)
-
-
-def book_ticket(request, train_id, tickets_left):   
-    
-    # Ping Trains and decrease count
-    tickets_left -= 1
-    query = "curl bookingService:8000/trains/{}/{}".format(str(train_id), str(tickets_left))
-    content = json.loads(os.popen(query).read())
-
-    if content["status"] == "Success":
-        # If successfully decreased ticket count add to booking list
-
-
-    
-    
-
-    
-
-    
-
-    return train_list(request)
-
-
-
-
-
-

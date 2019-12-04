@@ -1,10 +1,13 @@
 from django.shortcuts import render
+from django.http import HttpResponse
 from django.views.generic import (
     DetailView,
     ListView,
 )
 import os
 import json
+from django.core import serializers
+from django.http import JsonResponse
 
 #        -----------------View Functions-----------------------------
 
@@ -23,13 +26,19 @@ def user_bookings(request):
 
 
 def book_ticket(request, train_id, tickets_left):
-    # Consume Ticket in /Trians/
     tickets_left -= 1
-    if consume_ticket(train_id, tickets_left) == "Success":
-        #Add ticket to user's booked tickets
-        
+    data = {
+        "ticket_count":-1
+    }
 
-        return dashboard(request)
+    if consume_ticket(train_id, tickets_left) == "Success":
+        if add_ticket(request.user.id, train_id) == "Success":
+            data["ticket_count"] = tickets_left                     
+            return JsonResponse(data)
+
+   
+    return  JsonResponse(data)
+    
 
        
 
@@ -61,6 +70,16 @@ def get_user_bookings(user_id):
 
 def consume_ticket(train_id, tickets_left):
     query = "curl bookingService:8000/trains/{}/{}".format(str(train_id), str(tickets_left))
+    content = json.loads(os.popen(query).read())
+    
+
+    if content["status"] == "Success":
+        return "Success"
+    else:
+        return "Failure"
+
+def add_ticket(user_id, train_id):
+    query = "curl bookingService:8000/bookings/{}/{}".format(str(user_id), str(train_id))
     content = json.loads(os.popen(query).read())
 
     if content["status"] == "Success":

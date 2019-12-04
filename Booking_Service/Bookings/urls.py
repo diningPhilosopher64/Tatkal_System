@@ -3,9 +3,10 @@ from .views import *
 
 urlpatterns = [
 
-    # Bookings API
-    
+    # Bookings API    
     path('<int:user_id>', BookingList.as_view(), name = 'bookings-list' ),
-    # path('detail/<int:booking_id>', BookingDetail.as_view(), name = 'booking-detail' ),
-    path('all', AllBookings.as_view(), name='all-bookings-list' )
+    path('all', AllBookings.as_view(), name='all-bookings-list' ),
+    path('<int:user_id>/<int:train_id>', AddBooking.as_view() ,name='add-booking' )
+
+    
 ]

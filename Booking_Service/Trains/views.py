@@ -4,6 +4,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from .models import *
 from .serializers import *
+
 # Create your views here.
 
 class TrainList(generics.ListCreateAPIView):
@@ -22,8 +23,10 @@ class TrainDetail(generics.RetrieveUpdateDestroyAPIView):
 
 class ConsumeTicket(APIView):
     def get(self, request, *args, **kwargs):
-        train_id = kwargs.get('train_id')
-        tickets_left = kwargs.get('tickets_left')
+        train_id = int(kwargs.get('train_id'))
+        tickets_left = int(kwargs.get('tickets_left'))
+
+        print("\n \n \n tid tl",train_id, tickets_left )
 
         context = {
             "status":"Failure"
@@ -42,12 +45,12 @@ class ConsumeTicket(APIView):
         return Response(context)
 
 
-class BookTrain(APIView):
-    def post(self, request, *args, **kwargs):        
-        train_id = kwargs.get('train_id', -1)
-        train = Train.objects.filter(id = train_id)
-        train.tickets_left -= 1
-        train.save()
-        train_serializer = TrainSerializer(train)
-        return Response({""})
+# class BookTrain(APIView):
+#     def post(self, request, *args, **kwargs):        
+#         train_id = kwargs.get('train_id', -1)
+#         train = Train.objects.filter(id = train_id)
+#         train.tickets_left -= 1
+#         train.save()
+#         train_serializer = TrainSerializer(train)
+#         return Response({""})
 

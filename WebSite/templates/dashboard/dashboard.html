@@ -83,7 +83,18 @@
             },
                 success: function(data){
                     alert("Booked Ticket Successfully");
-                    //UpdateTicketCount(train_id, data.ticket_count);
+
+                    if(data.ticket_count  == -1)
+                    {
+                        alert("Unable to book")
+                    }
+
+                    else
+                    {
+                        console.log("ticket count is ")
+                        console.log(data.ticket_count)
+                        UpdateTicketCount(train_id, data.ticket_count);
+                    }
                 },
 
                 error: function(error_data){
@@ -99,7 +110,7 @@
     function UpdateTicketCount(train_id, ticket_count)
     {
         var arg = "#" + train_id.toString();
-        $(arg).html(tickets_count);
+        $(arg).html(ticket_count);
     }
 
 

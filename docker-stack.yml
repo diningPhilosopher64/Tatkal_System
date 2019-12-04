@@ -4,26 +4,31 @@ services:
   tatkal_website:
     
     image: sourabhkondapaka/tatkal_website
-    restart: on-failure
+    restart: on-failure 
+
+    deploy:
+      replicas: 1
+      update_config:
+        parallelism: 2
+        delay: 10s
+      # restart_policy:
+      #   condition: on-failure
+
 
     links:
       - "tatkal_booking_service:bookingService"
 
 
-    deploy:
-      replicas: 3
-      update_config:
-        parallelism: 2
-        delay: 10s
-        restart_policy:
-          condition: on-failure
+    
 
+    networks:
+      - net
 
     ports: 
       - 8000:8000
 
     volumes: 
-      - ./WebSite/:/home/user/
+      - ./WebSite/:/home/project/
 
     depends_on: 
       - db    
@@ -40,40 +45,61 @@ services:
       - 8001:8000
 
     volumes: 
-      - ./Booking_Service/:/home/user/
+      - ./Booking_Service/:/home/project/
+
+    networks:
+      - net
 
 
     deploy:
-      replicas: 3
+      replicas: 1
       update_config:
         parallelism: 2
         delay: 10s
-        restart_policy:
-          condition: on-failure
 
-
+      # restart_policy:
+      #   condition: on-failure
 
     depends_on: 
       - db    
 
-    command: > 
+    command: >
      sh -c "python3 manage.py makemigrations && python3 manage.py migrate && python3 manage.py runserver 0.0.0.0:8000"  
 
   db:
     
-    image: sourabhkondapaka/tatkal_postgres_db    
+    image: sourabhkondapaka/tatkal_postgres_db  
+    restart: on-failure 
+      
 
+    networks:
+      - net
 
     deploy:
-      replicas: 3
+      replicas: 1
       update_config:
         parallelism: 2
         delay: 10s
-        restart_policy:
-          condition: on-failure
+
+      # restart_policy:
+      #   condition: on-failure
 
     ports: 
       - 7890:5432
 
     volumes: 
       - ./db:/var/lib/postgresql/data
+
+  visualizer:
+    image: dockersamples/visualizer:stable
+    ports:
+      - "8080:8080"
+    stop_grace_period: 1m30s
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock"
+    deploy:
+      placement:
+        constraints: [node.role == manager]
+
+networks:
+  net:

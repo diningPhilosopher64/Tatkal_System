@@ -15,13 +15,13 @@ services:
       - 8000:8000
 
     volumes: 
-      - ./WebSite/:/home/user/
-
+      - ./WebSite/:/home/project/
     depends_on: 
       - db    
 
     command: >
      sh -c "python3 manage.py makemigrations && python3 manage.py migrate && python3 manage.py runserver 0.0.0.0:8000"
+       
 
   tatkal_booking_service:
  
@@ -32,7 +32,7 @@ services:
       - 8001:8000
 
     volumes: 
-      - ./Booking_Service/:/home/user/
+      - ./Booking_Service/:/home/project/
 
     depends_on: 
       - db    

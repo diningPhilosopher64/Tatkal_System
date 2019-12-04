@@ -19,12 +19,10 @@ def get_train_list():
 
 
 
-
 def dashboard(request):
-    if request.method == "POST":
-        context = get_train_list()
-        print("\n\n user id is ", request.user.id, "\n\n")
-        return render(request, 'dashboard/dashboard.html', context=context)
+    context = get_train_list()
+    print("\n\n user id is ", request.user.id, "\n\n")
+    return render(request, 'dashboard/dashboard.html', context=context)
 
 
     

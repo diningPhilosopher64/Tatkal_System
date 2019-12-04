@@ -11,7 +11,7 @@ from django.contrib.auth import logout, login, get_user
 def register_user(request):
     if request.method == 'POST':
         user_form = UserCreationForm(request.POST)
-        print("\n\n\n", get_user(request), "\n")
+        print("\n\n\n  ffff", get_user(request), "\n")
 
         if user_form.is_valid():            
             user_form.save()
@@ -31,15 +31,15 @@ def register_user(request):
         })
 
 
-def login_user(request):    
-    if request.method == "POST":        
+def login_user(request):  
+    if request.method == 'POST':        
         login_form = AuthenticationForm(data = request.POST)
-
         if login_form.is_valid():
-            print("\n\n\n User is authenticated \n\n")
             user = login_form.get_user()
+            print("\n \n \n logged user ", user)
             login(request, user)
-            return render(request, "dashboard/dashboard.html")
+            # return render(request, "dashboard/dashboard.html")
+            return redirect("dashboard:dashboard")
 
     else:
         login_form = AuthenticationForm()
@@ -49,10 +49,9 @@ def login_user(request):
 
 
 
-def logout_user(request):
-    if request.method == "POST":
-        logout(request)
-        return redirect("accounts:login")
+def logout_user(request):   
+    logout(request)
+    return redirect("accounts:login")
 
     
 

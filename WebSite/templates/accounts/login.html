@@ -1,11 +1,13 @@
 {% extends "partials/base.html" %}
 
+
+
 {% block content %}
-    <form method="post" action="{% url 'dashboard:dashboard' %}">
+
+<form method="post" action="{% url 'accounts:login' %}">
         {% csrf_token %}
-        {{ user_form.as_p }}   
-        
-        <button type="submit">Login</button>
+        {{ user_form }}
+        <button type="submit">Register</button>
 </form>
 
-{% endblock %}
+{% endblock content %}

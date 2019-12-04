@@ -36,10 +36,15 @@ def login_user(request):
         login_form = AuthenticationForm(data = request.POST)
         if login_form.is_valid():
             user = login_form.get_user()
-            print("\n \n \n logged user ", user)
             login(request, user)
-            # return render(request, "dashboard/dashboard.html")
             return redirect("dashboard:dashboard")
+
+        else:
+            print("\n \n \n some error \n \n \n")
+            return render(request, "accounts/login.html", {
+            "user_form": login_form
+        })
+
 
     else:
         login_form = AuthenticationForm()

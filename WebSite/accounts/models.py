@@ -5,7 +5,7 @@ from django.dispatch import receiver
 from django.core.validators import MinValueValidator, MaxValueValidator
 
 class Account(models.Model):
-    user = models.OneToOneField(User, on_delete= models.CASCADE,related_name='account')
+    user = models.OneToOneField(User, on_delete= models.CASCADE)
     GENDER_CHOICES = [('M', 'MALE'), ('F', 'FEMALE')]        
     age = models.IntegerField(null = True, blank = True, validators = [MinValueValidator(1), MaxValueValidator(102)])
     city = models.CharField(max_length = 50, blank = True, null = True)

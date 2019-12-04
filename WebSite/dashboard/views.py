@@ -15,15 +15,16 @@ def get_train_list():
         "trains" : content,        
     }
 
-    return content
+    return context
 
 
 
 
 def dashboard(request):
-    context = get_train_list()
-    print("\n\n user id is ", request.user.id, "\n\n")
-    return render(request, 'dashboard/dashboard.html', context=context)
+    if request.method == "POST":
+        context = get_train_list()
+        print("\n\n user id is ", request.user.id, "\n\n")
+        return render(request, 'dashboard/dashboard.html', context=context)
 
 
     

@@ -42,13 +42,6 @@ def book_ticket(request, train_id, tickets_left):
 
        
 
-    
-
-
-
-
-    
-
 #    --------------------- Helper Functions --------------------------
 
 def get_train_list():

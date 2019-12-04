@@ -1,0 +1,79 @@
+version: "3"
+
+services: 
+  tatkal_website:
+    
+    image: sourabhkondapaka/tatkal_website
+    restart: on-failure
+
+    links:
+      - "tatkal_booking_service:bookingService"
+
+
+    deploy:
+      replicas: 3
+      update_config:
+        parallelism: 2
+        delay: 10s
+        restart_policy:
+          condition: on-failure
+
+
+    ports: 
+      - 8000:8000
+
+    volumes: 
+      - ./WebSite/:/home/user/
+
+    depends_on: 
+      - db    
+
+    command: >
+     sh -c "python3 manage.py makemigrations && python3 manage.py migrate && python3 manage.py runserver 0.0.0.0:8000"
+
+  tatkal_booking_service:
+ 
+    image: sourabhkondapaka/tatkal_booking_service   
+    restart: on-failure 
+
+    ports: 
+      - 8001:8000
+
+    volumes: 
+      - ./Booking_Service/:/home/user/
+
+
+    deploy:
+      replicas: 3
+      update_config:
+        parallelism: 2
+        delay: 10s
+        restart_policy:
+          condition: on-failure
+
+
+
+    depends_on: 
+      - db    
+
+    command: > 
+     sh -c "python3 manage.py makemigrations && python3 manage.py migrate && python3 manage.py runserver 0.0.0.0:8000"  
+
+  db:
+    
+    image: sourabhkondapaka/tatkal_postgres_db    
+
+
+    deploy:
+      replicas: 3
+      update_config:
+        parallelism: 2
+        delay: 10s
+        restart_policy:
+          condition: on-failure
+
+    ports: 
+      - 7890:5432
+
+    volumes: 
+      - ./db:/var/lib/postgresql/data
